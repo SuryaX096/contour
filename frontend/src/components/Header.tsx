@@ -1,6 +1,6 @@
 import React from 'react';
 import { HealthData } from '../types';
-import { Database, RefreshCw, Layers, ShieldCheck, Zap } from 'lucide-react';
+import { Database, RefreshCw, Layers, CheckCircle, AlertTriangle, XCircle } from 'lucide-react';
 
 interface Props {
   activeTab: string;
@@ -18,33 +18,33 @@ export const Header: React.FC<Props> = ({
   isSeeding
 }) => {
   const tabs = [
-    { id: 'overview', label: 'Overview' },
-    { id: 'graph', label: 'Evidence Graph' },
-    { id: 'compiler', label: 'Context Compiler' },
-    { id: 'counterexample', label: 'Counterexample Lab' },
-    { id: 'comparison', label: 'Decision Comparison' },
-    { id: 'certificate', label: 'Verification Report' },
-    { id: 'benchmark', label: 'Benchmark' },
+    { id: 'overview', label: 'OVERVIEW' },
+    { id: 'graph', label: 'EVIDENCE GRAPH' },
+    { id: 'compiler', label: 'CONTEXT COMPILER' },
+    { id: 'counterexample', label: 'COUNTEREXAMPLE LAB' },
+    { id: 'comparison', label: 'DECISION COMPARISON' },
+    { id: 'certificate', label: 'VERIFICATION REPORT' },
+    { id: 'benchmark', label: 'BENCHMARK' },
   ];
 
   return (
-    <header className="border-b border-white/[0.07] bg-slate-950/75 backdrop-blur-2xl sticky top-0 z-50 px-6 py-3 transition-all duration-300">
+    <header className="border-b-2 border-black bg-white sticky top-0 z-50 px-6 py-3 shadow-sm">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Brand identity */}
-        <div className="flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-indigo-500/20 to-purple-600/10 border border-indigo-400/30 flex items-center justify-center text-indigo-400 shadow-glow-indigo">
-            <Layers className="w-5 h-5 text-indigo-300" />
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-black text-white border-2 border-black flex items-center justify-center shadow-brutal">
+            <Layers className="w-6 h-6 text-yellow-400" />
           </div>
           <div>
-            <div className="flex items-center gap-2.5">
-              <span className="font-bold text-xl tracking-tight text-white font-sans">
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-2xl tracking-tighter text-black font-sans uppercase">
                 CONTOUR
               </span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 text-indigo-300 uppercase tracking-wider">
-                Pro 1.0
+              <span className="text-[11px] font-black px-2 py-0.5 rounded bg-black text-white border border-black uppercase tracking-wider">
+                PRO v1.0
               </span>
             </div>
-            <p className="text-xs text-slate-400 tracking-normal hidden sm:block">
+            <p className="text-xs text-gray-700 font-bold uppercase tracking-tight hidden sm:block">
               Graph-native Decision Reliability Compiler
             </p>
           </div>
@@ -53,45 +53,46 @@ export const Header: React.FC<Props> = ({
         {/* Telemetry & Actions */}
         <div className="flex items-center gap-3">
           {/* FalkorDB Live Pill */}
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-md shadow-sm">
-            <div className="relative flex items-center justify-center w-2.5 h-2.5">
-              <span className={`absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping ${health?.graph_db_connected ? 'bg-emerald-400' : 'bg-rose-400'}`}></span>
-              <span className={`relative inline-flex rounded-full h-2 w-2 ${health?.graph_db_connected ? 'bg-emerald-500' : 'bg-rose-500'}`}></span>
-            </div>
-            <span className="text-xs font-medium text-slate-300">FalkorDB</span>
-            <span className={`text-[11px] font-semibold tracking-wide ${health?.graph_db_connected ? 'text-emerald-400' : 'text-rose-400'}`}>
-              {health?.graph_db_connected ? 'CONNECTED' : 'OFFLINE'}
+          <div className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg border-2 border-black font-bold text-xs shadow-brutal ${
+            health?.graph_db_connected ? 'bg-green-100 text-green-900' : 'bg-red-100 text-red-900'
+          }`}>
+            <span className={`inline-block w-2.5 h-2.5 rounded-full border border-black ${
+              health?.graph_db_connected ? 'bg-green-600 animate-pulse' : 'bg-red-600'
+            }`} />
+            <span className="text-black font-extrabold uppercase">FALKORDB:</span>
+            <span className={`uppercase font-black ${health?.graph_db_connected ? 'text-green-700' : 'text-red-700'}`}>
+              {health?.graph_db_connected ? 'ONLINE' : 'OFFLINE'}
             </span>
             {health?.graph_db_connected && (
-              <span className="text-[11px] text-slate-500 font-mono">({health.node_count} nodes)</span>
+              <span className="text-black font-mono text-[11px]">({health.node_count} nodes)</span>
             )}
           </div>
 
           <button
             onClick={onSeedReset}
             disabled={isSeeding}
-            className="btn btn-secondary text-xs py-1.5 px-3.5 rounded-full flex items-center gap-1.5"
+            className="btn btn-secondary text-xs py-1.5 px-3 flex items-center gap-1.5 border-2 border-black shadow-brutal font-extrabold uppercase"
             title="Reset and reload deterministic release graph"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isSeeding ? 'animate-spin text-indigo-400' : 'text-slate-400'}`} />
-            <span>Reset Demo</span>
+            <RefreshCw className={`w-3.5 h-3.5 ${isSeeding ? 'animate-spin text-red-600' : 'text-black'}`} />
+            <span>RESET DEMO</span>
           </button>
         </div>
       </div>
 
-      {/* Apple-style Segmented Control Navigation Tabs */}
+      {/* Bold Narrow Segmented Navigation Tabs */}
       <div className="max-w-7xl mx-auto mt-3">
-        <div className="inline-flex p-1 rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-lg overflow-x-auto max-w-full">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-3.5 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 whitespace-nowrap ${
+                className={`px-3.5 py-1.5 text-xs font-black rounded-md border-2 border-black transition-all whitespace-nowrap uppercase tracking-tight ${
                   isActive
-                    ? 'bg-white/[0.12] text-white shadow-sm border border-white/[0.15]'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent'
+                    ? 'bg-black text-white shadow-brutal'
+                    : 'bg-white text-black hover:bg-yellow-200'
                 }`}
               >
                 {tab.label}

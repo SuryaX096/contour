@@ -12,29 +12,29 @@ export const StatusPill: React.FC<Props> = ({ status }) => {
   switch (status) {
     case 'VERIFIED_WITHIN_DECLARED_SCOPE':
       return (
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/60 text-emerald-400 border border-emerald-800">
-          <ShieldCheck className="w-3.5 h-3.5" />
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-black uppercase tracking-tight bg-green-100 text-green-900 border-2 border-green-700 shadow-sm">
+          <ShieldCheck className="w-3.5 h-3.5 text-green-700" />
           VERIFIED WITHIN DECLARED SCOPE
         </span>
       );
     case 'COUNTEREXAMPLE_FOUND':
       return (
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-950/60 text-rose-400 border border-rose-800">
-          <ShieldAlert className="w-3.5 h-3.5" />
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-black uppercase tracking-tight bg-red-100 text-red-900 border-2 border-red-700 shadow-sm">
+          <ShieldAlert className="w-3.5 h-3.5 text-red-700" />
           COUNTEREXAMPLE FOUND
         </span>
       );
     case 'INSUFFICIENT_EVIDENCE':
       return (
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-950/60 text-amber-400 border border-amber-800">
-          <ShieldX className="w-3.5 h-3.5" />
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-black uppercase tracking-tight bg-yellow-100 text-yellow-900 border-2 border-yellow-700 shadow-sm">
+          <ShieldX className="w-3.5 h-3.5 text-yellow-700" />
           INSUFFICIENT EVIDENCE
         </span>
       );
     default:
       return (
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
-          <HelpCircle className="w-3.5 h-3.5" />
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-black uppercase tracking-tight bg-gray-100 text-black border-2 border-black shadow-sm">
+          <HelpCircle className="w-3.5 h-3.5 text-black" />
           {status}
         </span>
       );

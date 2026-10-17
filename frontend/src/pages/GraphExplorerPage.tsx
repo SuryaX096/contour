@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { GraphData, DecisionResponse, CounterexampleSearchResponse } from '../types';
 import { CytoscapeGraph } from '../components/CytoscapeGraph';
 import { NodeDetailsModal } from '../components/NodeDetailsModal';
-import { Layers, Eye, ShieldAlert, Filter } from 'lucide-react';
+import { Layers, ShieldAlert } from 'lucide-react';
 
 interface Props {
   graphData: GraphData | null;
@@ -32,12 +32,16 @@ export const GraphExplorerPage: React.FC<Props> = ({
   return (
     <div className="space-y-4">
       {/* Controls Bar */}
-      <div className="card p-4 flex flex-wrap items-center justify-between gap-4">
+      <div className="card p-5 bg-white border-2 border-black shadow-brutal flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <Layers className="w-5 h-5 text-indigo-400" />
+          <div className="w-10 h-10 rounded bg-black text-white flex items-center justify-center border-2 border-black shadow-sm">
+            <Layers className="w-6 h-6 text-yellow-400 stroke-[2.5]" />
+          </div>
           <div>
-            <h2 className="text-sm font-bold font-mono text-slate-100">Interactive Evidence Graph (Cytoscape.js)</h2>
-            <p className="text-xs text-slate-400">
+            <h2 className="text-base font-black uppercase tracking-tight text-black font-sans">
+              Interactive Evidence Graph (Cytoscape.js)
+            </h2>
+            <p className="text-xs text-gray-700 font-bold uppercase tracking-tight">
               Live persistent graph loaded directly from FalkorDB. Click any node to inspect properties and provenance.
             </p>
           </div>
@@ -46,11 +50,11 @@ export const GraphExplorerPage: React.FC<Props> = ({
         <div className="flex items-center gap-3">
           <button
             onClick={() => setHighlightCex(!highlightCex)}
-            className={`btn text-xs py-1.5 px-3 flex items-center gap-1.5 ${
-              highlightCex ? 'btn-danger' : 'btn-secondary'
+            className={`btn text-xs py-2 px-4 flex items-center gap-2 border-2 border-black font-black uppercase tracking-tight shadow-brutal ${
+              highlightCex ? 'bg-red-600 text-white' : 'bg-white text-black hover:bg-yellow-200'
             }`}
           >
-            <ShieldAlert className="w-3.5 h-3.5" />
+            <ShieldAlert className="w-4 h-4 stroke-[3]" />
             <span>Highlight Counterexample Path</span>
           </button>
         </div>

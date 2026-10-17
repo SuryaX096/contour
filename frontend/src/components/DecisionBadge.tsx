@@ -9,7 +9,7 @@ interface Props {
 
 export const DecisionBadge: React.FC<Props> = ({ outcome, size = 'md' }) => {
   if (!outcome) {
-    return <span className="text-slate-500 font-mono text-xs">UNSET</span>;
+    return <span className="text-gray-500 font-mono text-xs font-bold uppercase">UNSET</span>;
   }
 
   const sizeClasses = {
@@ -20,8 +20,8 @@ export const DecisionBadge: React.FC<Props> = ({ outcome, size = 'md' }) => {
 
   if (outcome === 'APPROVE') {
     return (
-      <span className={`badge badge-approve ${sizeClasses} gap-1.5`}>
-        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+      <span className={`badge badge-approve ${sizeClasses} gap-1.5 font-black uppercase tracking-tight`}>
+        <CheckCircle2 className="w-4 h-4 text-green-700" />
         APPROVE
       </span>
     );
@@ -29,17 +29,17 @@ export const DecisionBadge: React.FC<Props> = ({ outcome, size = 'md' }) => {
 
   if (outcome === 'BLOCK') {
     return (
-      <span className={`badge badge-block ${sizeClasses} gap-1.5`}>
-        <XCircle className="w-4 h-4 text-rose-400" />
+      <span className={`badge badge-block ${sizeClasses} gap-1.5 font-black uppercase tracking-tight`}>
+        <XCircle className="w-4 h-4 text-red-700" />
         BLOCK
       </span>
     );
   }
 
   return (
-    <span className={`badge badge-insufficient ${sizeClasses} gap-1.5`}>
-      <AlertTriangle className="w-4 h-4 text-amber-400" />
-      INSUFFICIENT_EVIDENCE
+    <span className={`badge badge-insufficient ${sizeClasses} gap-1.5 font-black uppercase tracking-tight`}>
+      <AlertTriangle className="w-4 h-4 text-yellow-700" />
+      {outcome}
     </span>
   );
 };

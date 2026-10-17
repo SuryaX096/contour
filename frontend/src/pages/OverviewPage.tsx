@@ -30,131 +30,127 @@ export const OverviewPage: React.FC<Props> = ({
 
   return (
     <div className="space-y-6">
-      {/* Apple Pro Hero Banner */}
-      <div className="card p-7 bg-gradient-to-br from-slate-900/90 via-indigo-950/20 to-slate-900/90 border-white/[0.08] relative overflow-hidden">
-        {/* Subtle Ambient Glow */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-2.5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-400/20 text-indigo-300 text-[11px] font-semibold tracking-wider uppercase">
+      {/* High-Contrast Hero Banner */}
+      <div className="card p-7 bg-white border-2 border-black shadow-brutal">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-yellow-300 border-2 border-black text-black text-xs font-black tracking-tight uppercase shadow-sm">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Software Release Readiness Domain</span>
+              <span>SOFTWARE RELEASE READINESS DOMAIN</span>
             </div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight font-sans">
+            <h1 className="text-3xl font-black text-black tracking-tighter uppercase font-sans">
               payment-service:v2.4.0 Gating Verification
             </h1>
-            <p className="text-sm text-slate-300 max-w-2xl leading-relaxed">
+            <p className="text-sm text-gray-800 font-bold max-w-2xl leading-snug tracking-tight">
               CONTOUR evaluates whether a reduced evidence context preserves the release decision, searches for hidden dependency counterexamples, and verifies formal reliability boundaries.
             </p>
           </div>
 
-          {/* Decision State Card */}
-          <div className="flex flex-wrap items-center gap-4 bg-white/[0.03] backdrop-blur-xl p-4 rounded-2xl border border-white/[0.08] shadow-inner">
+          {/* Decision Comparison Card */}
+          <div className="flex flex-wrap items-center gap-4 bg-gray-50 p-4 rounded-lg border-2 border-black shadow-sm">
             <div>
-              <span className="text-[11px] text-slate-400 font-medium block mb-1">Baseline Decision</span>
+              <span className="text-xs text-black font-extrabold uppercase block mb-1">Baseline Decision:</span>
               <DecisionBadge outcome={baselineDecision?.outcome} size="sm" />
             </div>
-            <ArrowRight className="w-4 h-4 text-slate-500 hidden sm:block" />
+            <ArrowRight className="w-5 h-5 text-black hidden sm:block stroke-[3]" />
             <div>
-              <span className="text-[11px] text-slate-400 font-medium block mb-1">Repaired Decision</span>
+              <span className="text-xs text-black font-extrabold uppercase block mb-1">Repaired Decision:</span>
               <DecisionBadge outcome={currentOutcome} size="sm" />
             </div>
-            <div className="border-l border-white/[0.08] pl-4">
-              <span className="text-[11px] text-slate-400 font-medium block mb-1">Verification Status</span>
+            <div className="border-l-2 border-black pl-4">
+              <span className="text-xs text-black font-extrabold uppercase block mb-1">Verification Status:</span>
               <StatusPill status={certificate?.status} />
             </div>
           </div>
         </div>
 
-        {/* Guided Interactive 3-Step Pipeline Controls */}
-        <div className="mt-7 pt-6 border-t border-white/[0.06] flex flex-wrap items-center gap-3 relative z-10">
+        {/* Guided Action Buttons: Black, Yellow, Red */}
+        <div className="mt-6 pt-6 border-t-2 border-black flex flex-wrap items-center gap-3">
           <button
             onClick={onRunBaseline}
             disabled={isLoading}
-            className="btn btn-primary text-xs flex items-center gap-2 shadow-lg"
+            className="btn btn-primary text-xs flex items-center gap-2 border-2 border-black font-black uppercase tracking-tight shadow-brutal"
           >
-            <Play className="w-3.5 h-3.5 fill-current" />
+            <Play className="w-4 h-4 fill-current text-green-400" />
             <span>1. Evaluate Baseline Context</span>
           </button>
 
           <button
             onClick={onRunSearch}
             disabled={isLoading || !baselineDecision}
-            className={`btn btn-secondary text-xs flex items-center gap-2 ${
-              baselineDecision ? 'hover:border-purple-400/40 hover:text-purple-300' : 'opacity-50 cursor-not-allowed'
+            className={`btn btn-warning text-xs flex items-center gap-2 border-2 border-black font-black uppercase tracking-tight shadow-brutal ${
+              baselineDecision ? '' : 'opacity-50 cursor-not-allowed'
             }`}
           >
-            <Search className="w-3.5 h-3.5 text-purple-400" />
+            <Search className="w-4 h-4 text-black stroke-[3]" />
             <span>2. Run Counterexample Search (Level 2 & 3)</span>
           </button>
 
           <button
             onClick={onRunRepair}
             disabled={isLoading || !counterexampleData || counterexampleData.counterexamples_found.length === 0}
-            className={`btn btn-danger text-xs flex items-center gap-2 ${
+            className={`btn btn-danger text-xs flex items-center gap-2 border-2 border-black font-black uppercase tracking-tight shadow-brutal ${
               counterexampleData && counterexampleData.counterexamples_found.length > 0
-                ? 'animate-pulse'
+                ? 'animate-bounce'
                 : 'opacity-50 cursor-not-allowed'
             }`}
           >
-            <Wrench className="w-3.5 h-3.5" />
+            <Wrench className="w-4 h-4 text-yellow-300 stroke-[3]" />
             <span>3. Execute Context Repair & Certify</span>
           </button>
         </div>
       </div>
 
-      {/* Primary Telemetry Metrics Grid */}
+      {/* Primary Metrics Grid (Black, Yellow, Red, Green) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
-          title="Selected Evidence"
+          title="SELECTED EVIDENCE"
           value={baselineDecision ? `${baselineDecision.selected_evidence_ids.length}` : '—'}
           subtext={baselineDecision ? `Reduced from ${baselineDecision.context_cost.total_graph_evidence_count} total records` : 'Awaiting baseline evaluation'}
-          icon={<Layers className="w-4 h-4" />}
+          icon={<Layers className="w-5 h-5 text-black" />}
           badge={
             baselineDecision && (
-              <span className="text-[11px] font-mono text-indigo-300 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-400/30">
-                -{baselineDecision.context_cost.reduction_percentage}% cost
+              <span className="text-xs font-black font-mono text-black bg-yellow-300 px-2.5 py-0.5 rounded border-2 border-black uppercase">
+                -{baselineDecision.context_cost.reduction_percentage}% COST
               </span>
             )
           }
         />
 
         <MetricCard
-          title="Scenarios Tested"
+          title="SCENARIOS TESTED"
           value={counterexampleData ? `${counterexampleData.scenarios_tested}` : '0'}
           subtext={counterexampleData?.completeness_metadata?.search_scope || 'Declared finite scenario space'}
-          icon={<Search className="w-4 h-4" />}
+          icon={<Search className="w-5 h-5 text-black stroke-[3]" />}
           badge={
             counterexampleData && (
-              <span className="text-[11px] font-mono text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded-full border border-purple-400/30">
-                {counterexampleData.counterexamples_found.length} CEX found
+              <span className="text-xs font-black font-mono text-white bg-red-600 px-2.5 py-0.5 rounded border-2 border-black uppercase">
+                {counterexampleData.counterexamples_found.length} CEX FOUND
               </span>
             )
           }
         />
 
         <MetricCard
-          title="Formal Solver (Level 3)"
+          title="FORMAL SOLVER (LEVEL 3)"
           value={certificate ? certificate.solver_status : 'STANDBY'}
           subtext="Z3 SMT first-order constraint solver"
-          icon={<Cpu className="w-4 h-4 text-cyan-400" />}
+          icon={<Cpu className="w-5 h-5 text-green-700 stroke-[2.5]" />}
           badge={
-            <span className="text-[11px] font-mono text-cyan-300 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-400/30">
+            <span className="text-xs font-black font-mono text-white bg-green-700 px-2.5 py-0.5 rounded border-2 border-black uppercase">
               SMT-LIB
             </span>
           }
         />
 
         <MetricCard
-          title="Context Repair Status"
+          title="CONTEXT REPAIR STATUS"
           value={repairData ? 'REPAIRED (1 ITER)' : 'UNREPAIRED'}
           subtext={repairData ? `Decision revised: ${repairData.previous_outcome} → ${repairData.revised_outcome}` : 'No counterexample applied yet'}
-          icon={<Activity className="w-4 h-4 text-emerald-400" />}
+          icon={<Activity className="w-5 h-5 text-red-600 stroke-[3]" />}
           badge={
             repairData && (
-              <span className="text-[11px] font-mono text-rose-300 bg-rose-500/10 px-2 py-0.5 rounded-full border border-rose-400/30">
+              <span className="text-xs font-black font-mono text-white bg-red-600 px-2.5 py-0.5 rounded border-2 border-black uppercase">
                 REVISED
               </span>
             )
@@ -162,36 +158,39 @@ export const OverviewPage: React.FC<Props> = ({
         />
       </div>
 
-      {/* Verification Pipeline Architecture Cards */}
-      <div className="card p-6">
-        <h2 className="text-base font-semibold text-white tracking-tight mb-4 flex items-center gap-2">
-          <Shield className="w-4 h-4 text-indigo-400" />
-          <span>Verification Pipeline Architecture</span>
+      {/* Verification Pipeline Architecture */}
+      <div className="card p-6 bg-white border-2 border-black shadow-brutal">
+        <h2 className="text-lg font-black text-black tracking-tight uppercase mb-4 flex items-center gap-2">
+          <Shield className="w-5 h-5 text-black stroke-[3]" />
+          <span>VERIFICATION PIPELINE ARCHITECTURE</span>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white/[0.02] hover:bg-white/[0.04] p-5 rounded-xl border border-white/[0.06] transition-colors">
-            <div className="text-[11px] font-bold tracking-wider text-indigo-400 uppercase font-sans mb-1.5">
+          <div className="bg-yellow-50 p-5 rounded-lg border-2 border-black shadow-sm">
+            <div className="text-xs font-black tracking-tight text-black uppercase mb-1.5 flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500 border border-black inline-block"></span>
               STAGE 1: CONTEXT COMPILATION
             </div>
-            <p className="text-slate-400 text-xs leading-relaxed">
+            <p className="text-gray-900 text-xs font-bold leading-normal">
               Extracts a minimal evidence subgraph from FalkorDB required to satisfy mandatory release policy rules. Explicitly tracks omitted dependencies.
             </p>
           </div>
 
-          <div className="bg-white/[0.02] hover:bg-white/[0.04] p-5 rounded-xl border border-white/[0.06] transition-colors">
-            <div className="text-[11px] font-bold tracking-wider text-purple-400 uppercase font-sans mb-1.5">
+          <div className="bg-red-50 p-5 rounded-lg border-2 border-black shadow-sm">
+            <div className="text-xs font-black tracking-tight text-red-800 uppercase mb-1.5 flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-600 border border-black inline-block"></span>
               STAGE 2: COUNTEREXAMPLE SEARCH
             </div>
-            <p className="text-slate-400 text-xs leading-relaxed">
+            <p className="text-gray-900 text-xs font-bold leading-normal">
               Enumerates bounded scenarios in isolated memory. Employs Microsoft Z3 SMT solver to formally prove whether omitted dependencies violate policy axioms.
             </p>
           </div>
 
-          <div className="bg-white/[0.02] hover:bg-white/[0.04] p-5 rounded-xl border border-white/[0.06] transition-colors">
-            <div className="text-[11px] font-bold tracking-wider text-emerald-400 uppercase font-sans mb-1.5">
+          <div className="bg-green-50 p-5 rounded-lg border-2 border-black shadow-sm">
+            <div className="text-xs font-black tracking-tight text-green-800 uppercase mb-1.5 flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-green-600 border border-black inline-block"></span>
               STAGE 3: REPAIR & CERTIFICATION
             </div>
-            <p className="text-slate-400 text-xs leading-relaxed">
+            <p className="text-gray-900 text-xs font-bold leading-normal">
               Expands the context with missing dependency paths, recomputes the deterministic decision, and produces an auditable SHA-256 signed verification record.
             </p>
           </div>

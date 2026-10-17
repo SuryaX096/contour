@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, FileText, CheckCircle2, AlertTriangle, Shield, Clock } from 'lucide-react';
+import { X, Clock } from 'lucide-react';
 
 interface Props {
   node: any | null;
@@ -12,35 +12,35 @@ export const NodeDetailsModal: React.FC<Props> = ({ node, onClose }) => {
   const props = node.properties || {};
 
   return (
-    <div className="fixed inset-y-0 right-0 w-96 bg-slate-900 border-l border-slate-800 shadow-2xl p-6 z-50 overflow-y-auto">
-      <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+    <div className="fixed inset-y-0 right-0 w-96 bg-white border-l-2 border-black shadow-2xl p-6 z-50 overflow-y-auto text-black">
+      <div className="flex items-center justify-between pb-4 border-b-2 border-black">
         <div>
-          <span className="text-xs font-mono font-semibold text-indigo-400 uppercase tracking-wider">{node.type}</span>
-          <h3 className="text-base font-bold text-slate-100 font-mono mt-0.5 break-all">{node.id}</h3>
+          <span className="text-xs font-black text-black uppercase tracking-wider bg-yellow-300 px-2 py-0.5 rounded border border-black">{node.type}</span>
+          <h3 className="text-lg font-black text-black font-mono mt-1 break-all uppercase tracking-tight">{node.id}</h3>
         </div>
         <button
           onClick={onClose}
-          className="text-slate-400 hover:text-white p-1 rounded-md hover:bg-slate-800 transition"
+          className="text-black hover:bg-gray-100 p-1.5 rounded-md border-2 border-black transition"
         >
-          <X className="w-5 h-5" />
+          <X className="w-5 h-5 stroke-[2.5]" />
         </button>
       </div>
 
       <div className="mt-4 space-y-4">
         {props.title && (
           <div>
-            <label className="text-xs font-semibold text-slate-400 block mb-1">Title</label>
-            <div className="text-sm font-medium text-slate-200">{props.title}</div>
+            <label className="text-xs font-black text-gray-700 uppercase tracking-tight block mb-1">Title</label>
+            <div className="text-sm font-black text-black">{props.title}</div>
           </div>
         )}
 
         {props.status && (
           <div>
-            <label className="text-xs font-semibold text-slate-400 block mb-1">Status</label>
-            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono font-semibold ${
-              props.status === 'PASSED' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
-              props.status === 'INCOMPATIBLE' || props.status === 'FAILED' ? 'bg-rose-950 text-rose-400 border border-rose-800' :
-              'bg-amber-950 text-amber-400 border border-amber-800'
+            <label className="text-xs font-black text-gray-700 uppercase tracking-tight block mb-1">Status</label>
+            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded text-xs font-black uppercase tracking-tight border-2 ${
+              props.status === 'PASSED' ? 'bg-green-100 text-green-900 border-green-700' :
+              props.status === 'INCOMPATIBLE' || props.status === 'FAILED' ? 'bg-red-100 text-red-900 border-red-700' :
+              'bg-yellow-100 text-yellow-900 border-yellow-700'
             }`}>
               {props.status}
             </span>
@@ -49,9 +49,9 @@ export const NodeDetailsModal: React.FC<Props> = ({ node, onClose }) => {
 
         {props.validity_status && (
           <div>
-            <label className="text-xs font-semibold text-slate-400 block mb-1">Validity SLA</label>
-            <span className={`text-xs font-mono px-2 py-0.5 rounded ${
-              props.validity_status === 'VALID' ? 'bg-slate-800 text-slate-300' : 'bg-amber-950 text-amber-400 border border-amber-800'
+            <label className="text-xs font-black text-gray-700 uppercase tracking-tight block mb-1">Validity SLA</label>
+            <span className={`text-xs font-black uppercase px-2 py-0.5 rounded border ${
+              props.validity_status === 'VALID' ? 'bg-gray-100 text-black border-black' : 'bg-yellow-100 text-yellow-900 border-yellow-700'
             }`}>
               {props.validity_status}
             </span>
@@ -60,16 +60,16 @@ export const NodeDetailsModal: React.FC<Props> = ({ node, onClose }) => {
 
         {props.source_type && (
           <div>
-            <label className="text-xs font-semibold text-slate-400 block mb-1">Source Type</label>
-            <div className="text-xs font-mono text-slate-300 bg-slate-950 p-2 rounded border border-slate-800">{props.source_type}</div>
+            <label className="text-xs font-black text-gray-700 uppercase tracking-tight block mb-1">Source Type</label>
+            <div className="text-xs font-mono font-bold text-black bg-gray-100 p-2 rounded border-2 border-black">{props.source_type}</div>
           </div>
         )}
 
         {props.timestamp && (
           <div>
-            <label className="text-xs font-semibold text-slate-400 block mb-1">Timestamp</label>
-            <div className="text-xs font-mono text-slate-400 flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-slate-500" />
+            <label className="text-xs font-black text-gray-700 uppercase tracking-tight block mb-1">Timestamp</label>
+            <div className="text-xs font-mono text-black font-bold flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-black" />
               {props.timestamp}
             </div>
           </div>
@@ -78,8 +78,8 @@ export const NodeDetailsModal: React.FC<Props> = ({ node, onClose }) => {
         {/* Payload / Raw Data */}
         {props.payload && (
           <div>
-            <label className="text-xs font-semibold text-slate-400 block mb-1">Payload / Execution Metrics</label>
-            <pre className="text-xs font-mono bg-slate-950 p-3 rounded border border-slate-800 text-slate-300 overflow-x-auto max-h-48">
+            <label className="text-xs font-black text-gray-700 uppercase tracking-tight block mb-1">Payload / Execution Metrics</label>
+            <pre className="text-xs font-mono font-bold bg-gray-50 p-3 rounded border-2 border-black text-black overflow-x-auto max-h-48">
               {JSON.stringify(props.payload, null, 2)}
             </pre>
           </div>
@@ -88,8 +88,8 @@ export const NodeDetailsModal: React.FC<Props> = ({ node, onClose }) => {
         {/* Metadata */}
         {props.metadata && Object.keys(props.metadata).length > 0 && (
           <div>
-            <label className="text-xs font-semibold text-slate-400 block mb-1">Provenance Metadata</label>
-            <pre className="text-xs font-mono bg-slate-950 p-3 rounded border border-slate-800 text-slate-400 overflow-x-auto max-h-48">
+            <label className="text-xs font-black text-gray-700 uppercase tracking-tight block mb-1">Provenance Metadata</label>
+            <pre className="text-xs font-mono font-bold bg-gray-50 p-3 rounded border-2 border-black text-black overflow-x-auto max-h-48">
               {JSON.stringify(props.metadata, null, 2)}
             </pre>
           </div>

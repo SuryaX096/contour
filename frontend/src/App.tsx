@@ -142,7 +142,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col text-slate-100">
+    <div className="min-h-screen bg-white flex flex-col text-black font-sans">
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -153,14 +153,14 @@ export const App: React.FC = () => {
 
       {errorMsg && (
         <div className="max-w-7xl mx-auto w-full px-6 pt-4">
-          <div className="p-3 bg-rose-950/70 border border-rose-800 rounded-lg flex items-center justify-between text-xs font-mono text-rose-300">
+          <div className="p-3 bg-red-100 border-2 border-red-600 rounded-lg flex items-center justify-between text-xs font-mono font-bold text-red-900 shadow-brutal">
             <div className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-rose-400" />
+              <AlertCircle className="w-4 h-4 text-red-600" />
               <span>{errorMsg}</span>
             </div>
             <button
               onClick={loadInitialData}
-              className="text-xs underline hover:text-white flex items-center gap-1"
+              className="text-xs underline hover:text-red-700 flex items-center gap-1 font-black"
             >
               <RefreshCw className="w-3 h-3" />
               Retry Connection
@@ -222,7 +222,7 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      <footer className="border-t border-slate-900 bg-slate-950 py-4 px-6 text-center text-xs text-slate-500 font-mono">
+      <footer className="border-t-2 border-black bg-white py-4 px-6 text-center text-xs text-black font-black uppercase tracking-tight">
         CONTOUR — Graph-Native Decision Reliability Compiler • Powered by FalkorDB, Z3 SMT Solver & Cytoscape.js
       </footer>
     </div>

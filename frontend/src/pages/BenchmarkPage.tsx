@@ -24,17 +24,17 @@ export const BenchmarkPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Benchmark Header */}
-      <div className="card p-6 bg-slate-900 border-slate-800">
+      <div className="card p-6 bg-white border-2 border-black shadow-brutal">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-mono font-semibold text-indigo-400 uppercase tracking-wider">
+            <span className="text-xs font-black text-black uppercase tracking-wider bg-yellow-300 px-2 py-0.5 rounded border border-black">
               EXPERIMENTAL EVALUATION SUITE
             </span>
-            <h2 className="text-lg font-bold font-mono text-slate-100 flex items-center gap-2">
-              <Award className="w-5 h-5 text-indigo-400" />
+            <h2 className="text-xl font-black text-black uppercase tracking-tight mt-1 font-sans flex items-center gap-2">
+              <Award className="w-6 h-6 text-black stroke-[2.5]" />
               100-Case Deterministic Benchmark
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-gray-700 font-bold mt-1 uppercase tracking-tight">
               Tests research hypotheses H1, H2, and H3 across 10 categories including multi-hop dependencies, omissions, stale records, and contradictions (fixed seed=42).
             </p>
           </div>
@@ -42,16 +42,16 @@ export const BenchmarkPage: React.FC = () => {
           <button
             onClick={handleRun}
             disabled={loading}
-            className="btn btn-primary text-xs flex items-center gap-2"
+            className="btn btn-primary text-xs flex items-center gap-2 border-2 border-black font-black uppercase tracking-tight shadow-brutal"
           >
-            <Play className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : 'fill-current'}`} />
+            <Play className={`w-4 h-4 ${loading ? 'animate-spin' : 'fill-current text-green-400'}`} />
             <span>{loading ? 'Evaluating 100 Cases...' : 'Run 100-Case Benchmark'}</span>
           </button>
         </div>
       </div>
 
       {error && (
-        <div className="card p-4 bg-rose-950/40 border-rose-900 text-rose-300 text-xs font-mono">
+        <div className="card p-4 bg-red-100 border-2 border-red-600 text-red-900 text-xs font-mono font-bold">
           {error}
         </div>
       )}
@@ -61,12 +61,12 @@ export const BenchmarkPage: React.FC = () => {
           {/* Key Metrics Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <MetricCard
-              title="Full Graph Agreement (Post-Repair)"
+              title="Full Graph Agreement"
               value={`${data.full_graph_agreement_after_repair}%`}
               subtext={`Compiler baseline: ${data.full_graph_agreement_compiler}%`}
-              icon={<CheckCircle2 className="w-4 h-4 text-emerald-400" />}
+              icon={<CheckCircle2 className="w-5 h-5 text-green-700 stroke-[3]" />}
               badge={
-                <span className="badge badge-approve text-[10px]">H1 VALIDATED</span>
+                <span className="badge badge-approve text-[10px] font-black">H1 VALIDATED</span>
               }
             />
 
@@ -74,9 +74,9 @@ export const BenchmarkPage: React.FC = () => {
               title="Omission Detection Rate"
               value={`${data.omission_detection_rate}%`}
               subtext="Defects detected via counterexample repair"
-              icon={<Zap className="w-4 h-4 text-amber-400" />}
+              icon={<Zap className="w-5 h-5 text-yellow-600 stroke-[3]" />}
               badge={
-                <span className="badge badge-counterexample text-[10px]">H2 VALIDATED</span>
+                <span className="badge badge-counterexample text-[10px] font-black">H2 VALIDATED</span>
               }
             />
 
@@ -84,9 +84,9 @@ export const BenchmarkPage: React.FC = () => {
               title="Avg Context Reduction"
               value={`-${data.avg_context_reduction_pct}%`}
               subtext={`Avg ${data.avg_tokens_baseline} tokens → ${data.avg_tokens_compiler} tokens`}
-              icon={<Layers className="w-4 h-4 text-indigo-400" />}
+              icon={<Layers className="w-5 h-5 text-black stroke-[3]" />}
               badge={
-                <span className="text-xs font-mono text-indigo-400 bg-indigo-950 px-2 py-0.5 rounded border border-indigo-800">
+                <span className="text-xs font-mono font-black text-black bg-yellow-300 px-2.5 py-0.5 rounded border border-black uppercase">
                   H3 AUDITABLE
                 </span>
               }
@@ -96,33 +96,33 @@ export const BenchmarkPage: React.FC = () => {
               title="Avg Decision Runtime"
               value={`${data.avg_eval_time_ms} ms`}
               subtext="Deterministic Python evaluation speed"
-              icon={<Clock className="w-4 h-4 text-cyan-400" />}
+              icon={<Clock className="w-5 h-5 text-black stroke-[2.5]" />}
             />
           </div>
 
           {/* Category Distribution Table */}
-          <div className="card p-6">
-            <h3 className="text-sm font-bold font-mono text-slate-100 mb-4 flex items-center gap-2">
-              <BarChart3 className="w-4 h-4 text-indigo-400" />
+          <div className="card p-6 bg-white border-2 border-black shadow-brutal">
+            <h3 className="text-base font-black uppercase tracking-tight text-black mb-4 flex items-center gap-2">
+              <BarChart3 className="w-5 h-5 text-black stroke-[3]" />
               Category Coverage Distribution (100 Scenarios)
             </h3>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto border-2 border-black rounded-lg">
               <table className="w-full text-left text-xs font-mono">
-                <thead className="bg-slate-950 text-slate-400 border-b border-slate-800">
+                <thead className="bg-black text-white border-b-2 border-black">
                   <tr>
-                    <th className="py-2.5 px-3">Evaluation Category</th>
-                    <th className="py-2.5 px-3">Scenarios</th>
-                    <th className="py-2.5 px-3">Evaluation Objective</th>
-                    <th className="py-2.5 px-3">Status</th>
+                    <th className="py-2.5 px-3 uppercase font-black">Evaluation Category</th>
+                    <th className="py-2.5 px-3 uppercase font-black">Scenarios</th>
+                    <th className="py-2.5 px-3 uppercase font-black">Evaluation Objective</th>
+                    <th className="py-2.5 px-3 uppercase font-black">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800 text-slate-300">
+                <tbody className="divide-y-2 divide-black text-black bg-white">
                   {Object.entries(data.categories).map(([cat, count]: [string, any]) => (
-                    <tr key={cat} className="hover:bg-slate-900/50">
-                      <td className="py-2.5 px-3 text-indigo-300 font-semibold">{cat}</td>
-                      <td className="py-2.5 px-3">{count}</td>
-                      <td className="py-2.5 px-3 text-slate-400 font-sans">
+                    <tr key={cat} className="hover:bg-yellow-50">
+                      <td className="py-2.5 px-3 font-black text-black">{cat}</td>
+                      <td className="py-2.5 px-3 font-black">{count}</td>
+                      <td className="py-2.5 px-3 text-black font-sans font-bold">
                         {cat === 'multi_hop_dependency_chains' ? 'Detects transitive defects omitted by shallow retrieval' :
                          cat === 'contradictory_evidence' ? 'Verifies conflicting claims trigger policy block' :
                          cat === 'stale_evidence' ? 'Ensures expired timestamps trigger freshness violation' :
@@ -130,7 +130,7 @@ export const BenchmarkPage: React.FC = () => {
                          'Validates decision preservation and deterministic solver bounds'}
                       </td>
                       <td className="py-2.5 px-3">
-                        <span className="text-emerald-400 font-semibold">PASSED</span>
+                        <span className="text-green-800 bg-green-100 border border-green-700 px-2 py-0.5 rounded font-black uppercase">PASSED</span>
                       </td>
                     </tr>
                   ))}
@@ -142,10 +142,10 @@ export const BenchmarkPage: React.FC = () => {
       )}
 
       {!data && !loading && (
-        <div className="card p-12 text-center text-slate-500">
-          <BarChart3 className="w-10 h-10 mx-auto text-slate-700 mb-3" />
-          <div className="font-mono text-sm text-slate-300">Benchmark Ready to Run</div>
-          <div className="text-xs text-slate-500 mt-1">
+        <div className="card p-12 text-center bg-white border-2 border-black shadow-brutal text-black">
+          <BarChart3 className="w-12 h-12 mx-auto text-black mb-3 stroke-[2.5]" />
+          <div className="font-sans font-black text-lg uppercase tracking-tight text-black">Benchmark Ready to Run</div>
+          <div className="text-xs text-gray-700 font-bold mt-1 uppercase tracking-tight">
             Click "Run 100-Case Benchmark" to evaluate all 10 scenario categories.
           </div>
         </div>
