@@ -1,0 +1,478 @@
+{
+  "services": [
+    {
+      "id": "service:payment-service:v2.4.0",
+      "name": "payment-service",
+      "version": "2.4.0",
+      "critical": true,
+      "metadata": {
+        "tier": "tier-1",
+        "repository": "github.com/org/payment-service",
+        "language": "Go"
+      }
+    },
+    {
+      "id": "service:auth-service:v1.2.0",
+      "name": "auth-service",
+      "version": "1.2.0",
+      "critical": true,
+      "metadata": {
+        "tier": "tier-1",
+        "repository": "github.com/org/auth-service"
+      }
+    },
+    {
+      "id": "service:ledger-db:v3.1.0",
+      "name": "ledger-db",
+      "version": "3.1.0",
+      "critical": true,
+      "metadata": {
+        "tier": "tier-1",
+        "repository": "github.com/org/ledger-db"
+      }
+    },
+    {
+      "id": "service:event-bus:v2.0.1",
+      "name": "event-bus",
+      "version": "2.0.1",
+      "critical": false,
+      "metadata": {
+        "tier": "tier-2",
+        "repository": "github.com/org/event-bus"
+      }
+    },
+    {
+      "id": "service:fraud-detection:v1.5.0",
+      "name": "fraud-detection",
+      "version": "1.5.0",
+      "critical": true,
+      "metadata": {
+        "tier": "tier-1",
+        "repository": "github.com/org/fraud-detection",
+        "note": "Critical transitive dependency omitted in shallow baseline context"
+      }
+    },
+    {
+      "id": "service:notification-service:v1.0.0",
+      "name": "notification-service",
+      "version": "1.0.0",
+      "critical": false,
+      "metadata": {
+        "tier": "tier-3"
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "RULE_CRIT_DEP_COMPAT",
+      "name": "Critical Dependency Compatibility",
+      "description": "All critical dependencies must have a known compatible version.",
+      "policy_version": "1.0.0",
+      "severity": "CRITICAL",
+      "mandatory": true,
+      "enabled": true
+    },
+    {
+      "id": "RULE_MANDATORY_TESTS_PASS",
+      "name": "Mandatory Tests Passing",
+      "description": "Mandatory unit and integration test suites must have status PASSED.",
+      "policy_version": "1.0.0",
+      "severity": "CRITICAL",
+      "mandatory": true,
+      "enabled": true
+    },
+    {
+      "id": "RULE_SECURITY_AUDIT_PASS",
+      "name": "Security Vulnerability Audit",
+      "description": "Security vulnerability scans must be clean without critical issues.",
+      "policy_version": "1.0.0",
+      "severity": "CRITICAL",
+      "mandatory": true,
+      "enabled": true
+    },
+    {
+      "id": "RULE_NO_CONFLICTING_EVIDENCE",
+      "name": "Evidence Consistency Verification",
+      "description": "Conflicting evidence records must not exist or be silently resolved.",
+      "policy_version": "1.0.0",
+      "severity": "CRITICAL",
+      "mandatory": true,
+      "enabled": true
+    },
+    {
+      "id": "RULE_NO_STALE_EVIDENCE",
+      "name": "Evidence Freshness SLA",
+      "description": "All evaluated evidence must be fresh and not marked STALE.",
+      "policy_version": "1.0.0",
+      "severity": "HIGH",
+      "mandatory": true,
+      "enabled": true
+    },
+    {
+      "id": "RULE_PERF_BENCHMARK_PASS",
+      "name": "Performance SLA Benchmark",
+      "description": "Performance benchmark latency must be within acceptable SLA.",
+      "policy_version": "1.0.0",
+      "severity": "HIGH",
+      "mandatory": false,
+      "enabled": true
+    }
+  ],
+  "claims": [
+    {
+      "id": "claim:payment:compat-auth",
+      "statement": "payment-service v2.4.0 is compatible with auth-service v1.2.0 API contract",
+      "subject": "service:payment-service:v2.4.0",
+      "predicate": "COMPATIBLE_WITH",
+      "object": "service:auth-service:v1.2.0",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "confidence": 0.99
+    },
+    {
+      "id": "claim:payment:compat-ledger",
+      "statement": "payment-service v2.4.0 meets transactional isolation requirements with ledger-db v3.1.0",
+      "subject": "service:payment-service:v2.4.0",
+      "predicate": "COMPATIBLE_WITH",
+      "object": "service:ledger-db:v3.1.0",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "confidence": 0.98
+    },
+    {
+      "id": "claim:payment:compat-fraud",
+      "statement": "payment-service v2.4.0 is compatible with fraud-detection v1.5.0 gRPC schema",
+      "subject": "service:payment-service:v2.4.0",
+      "predicate": "COMPATIBLE_WITH",
+      "object": "service:fraud-detection:v1.5.0",
+      "status": "DISPUTED",
+      "version": "1.0.0",
+      "confidence": 0.35
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev:payment:unit-tests-01",
+      "title": "Unit Test Suite (482/482 passing)",
+      "source_id": "service:payment-service:v2.4.0",
+      "source_type": "unit_test",
+      "timestamp": "2026-10-17T09:15:00Z",
+      "version": "2.4.0",
+      "status": "PASSED",
+      "payload": {
+        "passed": 482,
+        "failed": 0,
+        "coverage": 89.4
+      },
+      "validity_status": "VALID",
+      "metadata": {
+        "target_id": "service:payment-service:v2.4.0"
+      }
+    },
+    {
+      "id": "ev:payment:integration-01",
+      "title": "Core Payment Gateway Integration Suite",
+      "source_id": "service:payment-service:v2.4.0",
+      "source_type": "integration_test",
+      "timestamp": "2026-10-17T10:00:00Z",
+      "version": "2.4.0",
+      "status": "PASSED",
+      "payload": {
+        "scenarios_tested": 64,
+        "passed": 64
+      },
+      "validity_status": "VALID",
+      "metadata": {
+        "target_id": "service:payment-service:v2.4.0"
+      }
+    },
+    {
+      "id": "ev:payment:sec-audit-01",
+      "title": "SAST/DAST Zero Critical Vulnerabilities",
+      "source_id": "service:payment-service:v2.4.0",
+      "source_type": "security_scan",
+      "timestamp": "2026-10-17T10:30:00Z",
+      "version": "2.4.0",
+      "status": "PASSED",
+      "payload": {
+        "critical_vulnerabilities": 0,
+        "high": 0,
+        "medium": 2
+      },
+      "validity_status": "VALID",
+      "metadata": {
+        "target_id": "service:payment-service:v2.4.0"
+      }
+    },
+    {
+      "id": "ev:payment:perf-sla-01",
+      "title": "P99 Latency 42ms (< 100ms SLA)",
+      "source_id": "service:payment-service:v2.4.0",
+      "source_type": "perf_check",
+      "timestamp": "2026-10-17T11:00:00Z",
+      "version": "2.4.0",
+      "status": "PASSED",
+      "payload": {
+        "p99_latency_ms": 42.1,
+        "sla_target_ms": 100.0
+      },
+      "validity_status": "VALID",
+      "metadata": {
+        "target_id": "service:payment-service:v2.4.0"
+      }
+    },
+    {
+      "id": "ev:auth:compat-pass",
+      "title": "Auth Service API Contract Compatibility Check",
+      "source_id": "service:auth-service:v1.2.0",
+      "source_type": "compat_check",
+      "timestamp": "2026-10-17T08:00:00Z",
+      "version": "1.2.0",
+      "status": "PASSED",
+      "payload": {
+        "pact_verified": true,
+        "contract_version": "v1.2"
+      },
+      "validity_status": "VALID",
+      "metadata": {
+        "target_id": "service:auth-service:v1.2.0"
+      }
+    },
+    {
+      "id": "ev:ledger:compat-pass",
+      "title": "Ledger DB Transaction Serialization Compatibility",
+      "source_id": "service:ledger-db:v3.1.0",
+      "source_type": "compat_check",
+      "timestamp": "2026-10-17T08:30:00Z",
+      "version": "3.1.0",
+      "status": "PASSED",
+      "payload": {
+        "isolation_verified": "SERIALIZABLE",
+        "lock_timeouts": 0
+      },
+      "validity_status": "VALID",
+      "metadata": {
+        "target_id": "service:ledger-db:v3.1.0"
+      }
+    },
+    {
+      "id": "ev:event-bus:compat-pass",
+      "title": "Kafka Event Bus Schema Protocol Compatibility",
+      "source_id": "service:event-bus:v2.0.1",
+      "source_type": "compat_check",
+      "timestamp": "2026-10-17T09:00:00Z",
+      "version": "2.0.1",
+      "status": "PASSED",
+      "payload": {
+        "avro_schema_compatible": true
+      },
+      "validity_status": "VALID",
+      "metadata": {
+        "target_id": "service:event-bus:v2.0.1"
+      }
+    },
+    {
+      "id": "ev:fraud-detection:compat-fail",
+      "title": "Fraud Detection gRPC Protocol Breaking Change v1.5.0",
+      "source_id": "service:fraud-detection:v1.5.0",
+      "source_type": "compat_check",
+      "timestamp": "2026-10-17T11:45:00Z",
+      "version": "1.5.0",
+      "status": "INCOMPATIBLE",
+      "payload": {
+        "breaking_changes": [
+          "Field EvaluateRiskRequest.device_fingerprint removed in proto v1.5.0",
+          "Required enum RiskTier format incompatible with client v2.4.0"
+        ]
+      },
+      "validity_status": "VALID",
+      "metadata": {
+        "target_id": "service:fraud-detection:v1.5.0",
+        "severity": "BLOCKING"
+      }
+    },
+    {
+      "id": "ev:fraud-detection:sec-audit",
+      "title": "Fraud Detection Microservice Security Scan",
+      "source_id": "service:fraud-detection:v1.5.0",
+      "source_type": "security_scan",
+      "timestamp": "2026-10-17T11:30:00Z",
+      "version": "1.5.0",
+      "status": "PASSED",
+      "payload": {
+        "cve_count": 0
+      },
+      "validity_status": "VALID",
+      "metadata": {
+        "target_id": "service:fraud-detection:v1.5.0"
+      }
+    },
+    {
+      "id": "ev:docs-01",
+      "title": "Payment Service API Reference Architecture Guide",
+      "source_id": "service:payment-service:v2.4.0",
+      "source_type": "documentation",
+      "timestamp": "2026-10-16T12:00:00Z",
+      "version": "2.4.0",
+      "status": "PASSED",
+      "payload": {
+        "word_count": 1420
+      },
+      "validity_status": "VALID",
+      "metadata": {
+        "relevance": "OPTIONAL"
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "SCN_HIDDEN_DEP_INCOMPAT",
+      "name": "Hidden Incompatible Critical Dependency",
+      "scenario_type": "hidden_dependency",
+      "parameters": {
+        "service_id": "service:fraud-detection:v1.5.0",
+        "service_name": "fraud-detection",
+        "critical": true,
+        "evidence_id": "ev:fraud-detection:compat-fail",
+        "evidence_status": "INCOMPATIBLE",
+        "source_type": "compat_check"
+      },
+      "validation_status": "VALIDATED",
+      "search_method": "BOUNDED_ENUMERATION + Z3_FORMAL_PROVED"
+    },
+    {
+      "id": "SCN_STALE_SECURITY_AUDIT",
+      "name": "Security Audit Validity Expiration",
+      "scenario_type": "stale_evidence",
+      "parameters": {
+        "evidence_id": "ev:payment:sec-audit-01",
+        "validity_status": "STALE"
+      },
+      "validation_status": "VALIDATED",
+      "search_method": "BOUNDED_ENUMERATION"
+    },
+    {
+      "id": "SCN_TEST_FAILURE_INJECTION",
+      "name": "Mandatory Integration Test Failure",
+      "scenario_type": "test_failure",
+      "parameters": {
+        "evidence_id": "ev:payment:integration-01",
+        "status": "FAILED"
+      },
+      "validation_status": "VALIDATED",
+      "search_method": "BOUNDED_ENUMERATION"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "service:payment-service:v2.4.0",
+      "target": "service:auth-service:v1.2.0",
+      "type": "DEPENDS_ON",
+      "properties": {
+        "critical": true,
+        "min_version": "1.0.0"
+      }
+    },
+    {
+      "source": "service:payment-service:v2.4.0",
+      "target": "service:ledger-db:v3.1.0",
+      "type": "DEPENDS_ON",
+      "properties": {
+        "critical": true,
+        "min_version": "3.0.0"
+      }
+    },
+    {
+      "source": "service:payment-service:v2.4.0",
+      "target": "service:event-bus:v2.0.1",
+      "type": "DEPENDS_ON",
+      "properties": {
+        "critical": false,
+        "min_version": "2.0.0"
+      }
+    },
+    {
+      "source": "service:auth-service:v1.2.0",
+      "target": "service:fraud-detection:v1.5.0",
+      "type": "DEPENDS_ON",
+      "properties": {
+        "critical": true,
+        "min_version": "1.5.0"
+      }
+    },
+    {
+      "source": "ev:payment:unit-tests-01",
+      "target": "service:payment-service:v2.4.0",
+      "type": "SUPPORTS",
+      "properties": {}
+    },
+    {
+      "source": "ev:payment:integration-01",
+      "target": "service:payment-service:v2.4.0",
+      "type": "SUPPORTS",
+      "properties": {}
+    },
+    {
+      "source": "ev:payment:sec-audit-01",
+      "target": "service:payment-service:v2.4.0",
+      "type": "SUPPORTS",
+      "properties": {}
+    },
+    {
+      "source": "ev:payment:perf-sla-01",
+      "target": "service:payment-service:v2.4.0",
+      "type": "SUPPORTS",
+      "properties": {}
+    },
+    {
+      "source": "ev:auth:compat-pass",
+      "target": "service:auth-service:v1.2.0",
+      "type": "SUPPORTS",
+      "properties": {}
+    },
+    {
+      "source": "ev:ledger:compat-pass",
+      "target": "service:ledger-db:v3.1.0",
+      "type": "SUPPORTS",
+      "properties": {}
+    },
+    {
+      "source": "ev:event-bus:compat-pass",
+      "target": "service:event-bus:v2.0.1",
+      "type": "SUPPORTS",
+      "properties": {}
+    },
+    {
+      "source": "ev:fraud-detection:compat-fail",
+      "target": "service:fraud-detection:v1.5.0",
+      "type": "CONTRADICTS",
+      "properties": {
+        "reason": "Proto schema break in EvaluateRiskRequest"
+      }
+    },
+    {
+      "source": "ev:fraud-detection:sec-audit",
+      "target": "service:fraud-detection:v1.5.0",
+      "type": "SUPPORTS",
+      "properties": {}
+    },
+    {
+      "source": "claim:payment:compat-auth",
+      "target": "service:auth-service:v1.2.0",
+      "type": "SUPPORTS",
+      "properties": {}
+    },
+    {
+      "source": "claim:payment:compat-ledger",
+      "target": "service:ledger-db:v3.1.0",
+      "type": "SUPPORTS",
+      "properties": {}
+    },
+    {
+      "source": "claim:payment:compat-fraud",
+      "target": "service:fraud-detection:v1.5.0",
+      "type": "CONTRADICTS",
+      "properties": {}
+    }
+  ]
+}
