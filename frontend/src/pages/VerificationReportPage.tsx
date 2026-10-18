@@ -126,10 +126,12 @@ export const VerificationReportPage: React.FC<Props> = ({ certificate }) => {
       </div>
 
       {/* Certificate Viewer Modal */}
-      <CertificateModal
-        certificate={certificate}
-        onClose={() => setShowModal(false)}
-      />
+      {showModal && (
+        <CertificateModal
+          certificate={certificate}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 };

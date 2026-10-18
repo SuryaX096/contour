@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { VerificationCertificate } from '../types';
 import { X, Copy, Download, Check, ShieldCheck } from 'lucide-react';
 
@@ -9,6 +9,17 @@ interface Props {
 
 export const CertificateModal: React.FC<Props> = ({ certificate, onClose }) => {
   const [copied, setCopied] = useState(false);
+
+  // Close on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   if (!certificate) return null;
 
@@ -31,9 +42,15 @@ export const CertificateModal: React.FC<Props> = ({ certificate, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-white border-2 border-black rounded-lg w-full max-w-3xl max-h-[85vh] flex flex-col shadow-brutal text-black">
-        <div className="p-4 border-b-2 border-black flex items-center justify-between">
+    <div 
+      onClick={onClose}
+      className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 cursor-pointer animate-in fade-in duration-200"
+    >
+      <div 
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white border-2 border-black rounded-lg w-full max-w-3xl max-h-[85vh] flex flex-col shadow-brutal text-black cursor-default"
+      >
+        <div className="p-4 border-b-2 border-black flex items-center justify-between bg-white rounded-t-lg">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-6 h-6 text-green-700 stroke-[3]" />
             <h3 className="font-sans font-black text-black text-base uppercase tracking-tight">
@@ -42,13 +59,15 @@ export const CertificateModal: React.FC<Props> = ({ certificate, onClose }) => {
           </div>
           <button
             onClick={onClose}
-            className="text-black hover:bg-gray-100 p-1 rounded-md border-2 border-black transition"
+            aria-label="Close modal"
+            className="text-black hover:bg-red-500 hover:text-white p-1.5 rounded-md border-2 border-black transition-colors"
+            title="Close (Esc)"
           >
-            <X className="w-5 h-5 stroke-[2.5]" />
+            <X className="w-5 h-5 stroke-[3]" />
           </button>
         </div>
 
-        <div className="p-4 overflow-y-auto flex-1 font-mono text-xs">
+        <div className="p-4 overflow-y-auto flex-1 font-mono text-xs bg-white">
           <div className="mb-4 grid grid-cols-2 gap-3 text-xs bg-gray-50 p-3 rounded-lg border-2 border-black">
             <div>
               <span className="text-gray-600 block uppercase font-bold">Decision ID:</span>
@@ -77,7 +96,7 @@ export const CertificateModal: React.FC<Props> = ({ certificate, onClose }) => {
           </pre>
         </div>
 
-        <div className="p-4 border-t-2 border-black flex items-center justify-end gap-3 bg-gray-50 rounded-b-lg">
+        <div className="p-4 border-t-2 border-black flex flex-wrap items-center justify-end gap-3 bg-gray-50 rounded-b-lg">
           <button
             onClick={handleCopy}
             className="btn btn-secondary text-xs flex items-center gap-1.5 border-2 border-black font-black uppercase tracking-tight shadow-brutal"
@@ -91,6 +110,13 @@ export const CertificateModal: React.FC<Props> = ({ certificate, onClose }) => {
           >
             <Download className="w-3.5 h-3.5 text-yellow-300 stroke-[2.5]" />
             <span>DOWNLOAD AUDIT CERTIFICATE</span>
+          </button>
+          <button
+            onClick={onClose}
+            className="btn bg-gray-200 text-black hover:bg-gray-300 text-xs flex items-center gap-1.5 border-2 border-black font-black uppercase tracking-tight shadow-brutal"
+          >
+            <X className="w-3.5 h-3.5 stroke-[2.5]" />
+            <span>CLOSE</span>
           </button>
         </div>
       </div>
