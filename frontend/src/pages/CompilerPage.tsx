@@ -69,6 +69,7 @@ export const CompilerPage: React.FC<Props> = ({ baselineDecision }) => {
         </div>
       </div>
 
+
       {/* Evidence Selection Breakdown Table */}
       <div className="card p-6 bg-white border-2 border-black shadow-brutal">
         <h3 className="text-base font-black uppercase tracking-tight text-black mb-4 flex items-center gap-2">
@@ -118,11 +119,10 @@ export const CompilerPage: React.FC<Props> = ({ baselineDecision }) => {
           {baselineDecision.omitted_evidence_ids.map((id) => (
             <span
               key={id}
-              className={`px-2.5 py-1 rounded text-xs font-mono font-black uppercase border-2 ${
-                id.includes('fraud')
+              className={`px-2.5 py-1 rounded text-xs font-mono font-black uppercase border-2 ${id.includes('fraud')
                   ? 'bg-red-600 text-white border-black shadow-sm'
                   : 'bg-gray-100 text-black border-black'
-              }`}
+                }`}
             >
               {id} {id.includes('fraud') && '⚠️ (CRITICAL DEFECT)'}
             </span>
